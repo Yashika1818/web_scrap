@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import requests
+from model import *
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
@@ -24,8 +25,9 @@ def home():
         all_ing = set()
         for li in soup.find_all("a", class_="ingred-link black"):
             all_ing.add(li.text)
-        print(all_ing)
-        return jsonify({"product": product, "prediction": total})
+        ingredients, exempts = generate_ings_exempts(list(all_ing))
+        summary = get_summary(get_compounds(ingredients), exempts)
+        return jsonify(summary)
 
 
 
@@ -61,8 +63,10 @@ def data():
         all_ing = set()
         for li in ingredients.find_all("span"):
             all_ing.add(li.text)
-
-        return jsonify({"product": product, "prediction": total})
+        
+        ingredients, exempts = generate_ings_exempts(list(all_ing))
+        summary = get_summary(get_compounds(ingredients), exempts)
+        return jsonify(summary)
 
 
 if __name__ == "__main__":
