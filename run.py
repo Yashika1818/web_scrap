@@ -24,7 +24,7 @@ def home():
         soup = BeautifulSoup(details.text, "html.parser")
         all_ing = set()
         for li in soup.find_all("a", class_="ingred-link black"):
-            all_ing.add(li.text)
+            all_ing.add(li.text.lower())
         ingredients, exempts = generate_ings_exempts(list(all_ing))
         summary = get_summary(get_compounds(ingredients), exempts)
         return jsonify(summary)
@@ -62,7 +62,7 @@ def data():
 
         all_ing = set()
         for li in ingredients.find_all("span"):
-            all_ing.add(li.text)
+            all_ing.add(li.text.lower())
         
         ingredients, exempts = generate_ings_exempts(list(all_ing))
         summary = get_summary(get_compounds(ingredients), exempts)

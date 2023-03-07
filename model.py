@@ -71,7 +71,20 @@ def get_compounds(ingredients):
             compound = Chem.MolFromSmiles(result.canonical_smiles)
             compounds[compound] = ingredient_name
         except:
-            print("Left:", ingredient_name)
+            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{ingredient_name}/cids/JSON"
+            response = requests.get(url)
+            if response.status_code == 200:
+                data = json.loads(response.content)
+                if "IdentifierList" in data:
+                    cid = data["IdentifierList"]["CID"][0]
+                    tox_request_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/assay/aid/2286/JSON?cid={}".format(cid)
+                    tox_response = requests.get(tox_request_url)
+                    tox_data = json.loads(tox_response.text)
+                    print(tox_data)
+                else:
+                    print("Left:", ingredient_name)
+            else:
+                print("Left:", ingredient_name)
     return compounds
 
 def get_summary(compounds, exempts):
