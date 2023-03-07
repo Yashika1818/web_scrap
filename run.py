@@ -26,7 +26,8 @@ def home():
         for li in soup.find_all("a", class_="ingred-link black"):
             all_ing.add(li.text.lower())
         ingredients, exempts = generate_ings_exempts(list(all_ing))
-        summary = get_summary(get_compounds(ingredients), exempts)
+        compounds = get_compounds(ingredients)
+        summary = get_summary(compounds, exempts)
         return jsonify(summary)
 
 
@@ -52,8 +53,10 @@ def data():
 
         links = soup.find("ul", class_="products")
         ingredients = None
+        i = 0
         while ingredients == None:
             link = links.find_all("li")[i]
+            i += 1
             anchors = link.find("a")
             specific = anchors["href"]
             details = requests.get(url + specific[1:])
@@ -65,7 +68,8 @@ def data():
             all_ing.add(li.text.lower())
         
         ingredients, exempts = generate_ings_exempts(list(all_ing))
-        summary = get_summary(get_compounds(ingredients), exempts)
+        compounds = get_compounds(ingredients)
+        summary = get_summary(compounds, exempts)
         return jsonify(summary)
 
 

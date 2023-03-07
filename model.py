@@ -58,7 +58,7 @@ def predict_toxicity(compound):
 
 def generate_ings_exempts(ings):
     list_of_ingredients = set(ings)
-    exemptions = set(['water', 'sodium chloride', 'potassium chloride', 'magnesium chloride', 'calcium chloride', 'sodium hydroxide', 'potassium hydroxide', 'ammonium hydroxide', 'hydrochloric acid', 'sulfuric acid', 'nitric acid', 'acetic acid', 'citric acid', 'lactic acid', 'benzoic acid', 'salicylic acid', 'urea', 'glycerin', 'propylene glycol', 'ethanol', 'isopropyl alcohol', 'hexylene glycol', 'butylene glycol', 'propanediol', 'polyethylene glycol (PEG)', 'sorbitol', 'xylitol', 'sucralose', 'saccharin', 'aspartame', 'titanium dioxide', 'iron oxide'])
+    exemptions = set(['water', 'salt', 'sugar', 'malic acid', 'colour', 'paprika' ,'sodium chloride', 'potassium chloride', 'magnesium chloride', 'calcium chloride', 'sodium hydroxide', 'potassium hydroxide', 'ammonium hydroxide', 'hydrochloric acid', 'sulfuric acid', 'nitric acid', 'acetic acid', 'citric acid', 'lactic acid', 'benzoic acid', 'salicylic acid', 'urea', 'glycerin', 'propylene glycol', 'ethanol', 'isopropyl alcohol', 'hexylene glycol', 'butylene glycol', 'propanediol', 'polyethylene glycol (PEG)', 'sorbitol', 'xylitol', 'sucralose', 'saccharin', 'aspartame', 'titanium dioxide', 'iron oxide'])
     ingredients = list(list_of_ingredients - exemptions)
     exempts = list(list_of_ingredients - set(ingredients))
     return ingredients, exempts
@@ -90,7 +90,7 @@ def get_compounds(ingredients):
 def get_summary(compounds, exempts):
     summary = {}
     overall = 0
-    ingredient_count = len(compounds)
+    ingredient_count = len(compounds) + len(exempts)
     aqua_tot, env_tot = 0, 0
     for compound, name in compounds.items():
         environment_preds, aquatic_preds, composite_preds = predict_toxicity(compound)
