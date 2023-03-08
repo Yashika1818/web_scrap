@@ -26,8 +26,8 @@ def home():
         for li in soup.find_all("a", class_="ingred-link black"):
             all_ing.add(li.text.lower())
         ingredients, exempts = generate_ings_exempts(list(all_ing))
-        compounds = get_compounds(ingredients)
-        summary = get_summary(compounds, exempts)
+        compounds, left = get_compounds(ingredients)
+        summary = get_summary(compounds, exempts, left)
         return jsonify(summary)
 
 
@@ -68,8 +68,8 @@ def data():
             all_ing.add(li.text.lower())
         
         ingredients, exempts = generate_ings_exempts(list(all_ing))
-        compounds = get_compounds(ingredients)
-        summary = get_summary(compounds, exempts)
+        compounds, left = get_compounds(ingredients)
+        summary = get_summary(compounds, exempts, left)
         return jsonify(summary)
 
 

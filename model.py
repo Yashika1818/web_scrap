@@ -65,6 +65,7 @@ def generate_ings_exempts(ings):
 
 def get_compounds(ingredients):
     compounds = {}
+    left = []
     for ingredient_name in ingredients:
         try:
             result = pcp.get_compounds(ingredient_name, 'name')[0]
@@ -81,13 +82,11 @@ def get_compounds(ingredients):
                     tox_response = requests.get(tox_request_url)
                     tox_data = json.loads(tox_response.text)
                     print(tox_data)
-                else:
-                    print("Left:", ingredient_name)
             else:
-                print("Left:", ingredient_name)
-    return compounds
+                left.append(ingredient_name)
+    return compounds, left
 
-def get_summary(compounds, exempts):
+def get_summary(compounds, exempts, left):
     summary = {}
     overall = 0
     ingredient_count = len(compounds) + len(exempts)
@@ -104,4 +103,6 @@ def get_summary(compounds, exempts):
     summary["Environment"] = str(env_tot / ingredient_count)
     for ing in exempts:
         summary[ing.capitalize()] = ['0', '0', get_compound_url(ing)]
+    for ing in left:
+        summary[ing.capitalize()] = ['-1']
     return summary
