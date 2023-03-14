@@ -104,5 +104,5 @@ def get_summary(compounds, exempts, left):
     for ing in exempts:
         summary[ing.capitalize()] = ['0', '0', get_compound_url(ing)]
     for ing in left:
-        summary[ing.capitalize()] = ['-1']
+        summary[ing.capitalize()] = ['-1', '-1', ""]
     return summary
