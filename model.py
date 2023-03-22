@@ -1,8 +1,5 @@
 import deepchem as dc
-from deepchem.models import GraphConvModel
 import pubchempy as pcp
-import numpy as np
-import pandas as pd
 from rdkit import Chem
 import requests, json
 
