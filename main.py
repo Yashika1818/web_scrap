@@ -25,10 +25,13 @@ def home():
         all_ing = set()
         for li in soup.find_all("a", class_="ingred-link black"):
             all_ing.add(li.text.lower())
-        ingredients, exempts = generate_ings_exempts(list(all_ing))
-        compounds, left = get_compounds(ingredients)
-        summary = get_summary(compounds, exempts, left)
-        return jsonify(summary)
+        try:
+            ingredients, exempts = generate_ings_exempts(list(all_ing))
+            compounds, left = get_compounds(ingredients)
+            summary = get_summary(compounds, exempts, left)
+            return jsonify(summary)
+        except: 
+            return "product not found"
 
 
 
@@ -66,13 +69,15 @@ def data():
         all_ing = set()
         for li in ingredients.find_all("span"):
             all_ing.add(li.text.lower())
-        
-        ingredients, exempts = generate_ings_exempts(list(all_ing))
-        compounds, left = get_compounds(ingredients)
-        summary = get_summary(compounds, exempts, left)
-        return jsonify(summary)
+        try:
+            ingredients, exempts = generate_ings_exempts(list(all_ing))
+            compounds, left = get_compounds(ingredients)
+            summary = get_summary(compounds, exempts, left)
+            return jsonify(summary)
+        except:
+            return "product not found"
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=8080)
+    app.run(debug=True)#, host="0.0.0.0", port=8080)
 

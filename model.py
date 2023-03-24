@@ -94,10 +94,10 @@ def get_summary(compounds, exempts, left):
         overall += comp
         aqua_tot += aqua
         env_tot += env
-        summary[name.capitalize()] = [str(aqua), str(env), get_compound_url(name)]
-    summary["Overall"] = str(overall / ingredient_count)
-    summary["Aquatic"] = str(aqua_tot / ingredient_count)
-    summary["Environment"] = str(env_tot / ingredient_count)
+        summary[name.capitalize()] = [str(round(aqua, 3)), str(round(env, 3)), get_compound_url(name)]
+    summary["Overall"] = str(round((overall / ingredient_count), 3))
+    summary["Aquatic"] = str(round((aqua_tot / ingredient_count), 3))
+    summary["Environment"] = str(round((env_tot / ingredient_count), 3))
     for ing in exempts:
         summary[ing.capitalize()] = ['0', '0', get_compound_url(ing)]
     for ing in left:
