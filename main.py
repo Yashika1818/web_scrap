@@ -29,7 +29,7 @@ def home():
                 ingredients, exempts = generate_ings_exempts(list(all_ing))
                 compounds, left = get_compounds(ingredients)
                 summary = get_summary(compounds, exempts, left)
-                return jsonify(summary)
+            return jsonify(summary)
         except: 
             return "product not found"
 
@@ -73,7 +73,7 @@ def data():
                 ingredients, exempts = generate_ings_exempts(list(all_ing))
                 compounds, left = get_compounds(ingredients)
                 summary = get_summary(compounds, exempts, left)
-                return jsonify(summary)
+            return jsonify(summary)
         except:
             return "product not found"
 
