@@ -30,8 +30,8 @@ def home():
                 compounds, left = get_compounds(ingredients)
                 summary = get_summary(compounds, exempts, left)
             return jsonify(summary)
-        except: 
-            return "product not found"
+        except Exception as e: 
+            return e
 
 
 
@@ -74,8 +74,8 @@ def data():
                 compounds, left = get_compounds(ingredients)
                 summary = get_summary(compounds, exempts, left)
             return jsonify(summary)
-        except:
-            return "product not found"
+        except Exception as e:
+            return e
 
 
 if __name__ == "__main__":
