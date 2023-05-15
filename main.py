@@ -20,7 +20,8 @@ def home():
 
             links = soup_data.find_all("a", class_="klavika simpletextlistitem")
             specific = links[0]["href"]
-
+            final_prod_name=links[0].text
+            print(final_prod_name)
             details = requests.get(url + specific[1:])
             soup = BeautifulSoup(details.text, "html.parser")
             all_ing = set()
@@ -63,6 +64,8 @@ def data():
                 i += 1
                 anchors = link.find("a")
                 specific = anchors["href"]
+                final_prod_name=anchors.text
+                print(final_prod_name)
                 details = requests.get(url + specific[1:])
                 soup = BeautifulSoup(details.text, "html.parser")
                 ingredients = soup.find("ol", id="ordered_ingredients_list")
